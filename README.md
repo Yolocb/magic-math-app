@@ -1,10 +1,10 @@
 # 🎯 Magische Zahlen - Mathe für Erstklässler
 
-Eine kinderfreundliche Web-Applikation für Mathematik-Übungen, speziell entwickelt für Kinder in der 1. Klasse.
+Eine kinderfreundliche Web-Applikation für Mathematik-Übungen, speziell entwickelt für Kinder in der 1. Klasse. Jetzt mit interaktiven Antwortfeldern und sofortigem Feedback!
 
 ## 📋 Funktionen
 
-Die App bietet 4 verschiedene Arten von Mathe-Übungen:
+Die App bietet 6 verschiedene Arten von Mathe-Übungen:
 
 ### 1. 🔢 Halbieren
 - Das Kind muss die angezeigte Zahl halbieren
@@ -26,13 +26,37 @@ Die App bietet 4 verschiedene Arten von Mathe-Übungen:
 - Ergebnis ist immer positiv
 - Beispiel: "9 - 4 = ___"
 
+### 5. ✖️ Malrechnen (1x1)
+- Einfache Multiplikation für Erstklässler
+- Verwendet Zahlen zwischen 1 und 5
+- Beispiel: "3 × 4 = ___"
+
+### 6. 🔢 Zahlenfolgen
+- Das Kind muss fehlende Zahlen in Sequenzen finden
+- Aufsteigende und absteigende Folgen
+- Beispiel: "Welche Zahl fehlt? 2, 4, ___, 8, 10"
+
 ## 🎮 Wie funktioniert es?
 
 1. **Übungen auswählen**: Wähle eine oder mehrere Übungsarten aus
-2. **Magische Zahlen**: Klicke auf den "Magische Zahlen" Button
-3. **10 Aufgaben**: Die App generiert 10 zufällige Aufgaben basierend auf deiner Auswahl
-4. **Aufgaben drucken**: Klicke auf "🖨️ Aufgaben drucken" um die Aufgaben zu drucken
-5. **Neue Aufgaben**: Klicke auf "Neue Aufgaben" um zurück zur Auswahl zu gehen
+2. **Anzahl wählen**: Wähle zwischen 10, 15 oder 20 Aufgaben
+3. **Magische Zahlen**: Klicke auf den "Magische Zahlen" Button
+4. **Interaktiv lösen**: Gib deine Antworten in die Eingabefelder ein
+5. **Sofortiges Feedback**: Erhalte sofort Rückmeldung mit ✅ oder ❌
+6. **Fortschritt verfolgen**: Sieh deine Punktzahl in Echtzeit
+7. **Alle prüfen**: Klicke auf "✅ Alle Antworten prüfen" für eine Gesamtauswertung
+8. **Aufgaben drucken**: Klicke auf "🖨️ Aufgaben drucken" um die Aufgaben zu drucken
+9. **Neue Aufgaben**: Klicke auf "🎲 Neue Aufgaben" um zurück zur Auswahl zu gehen
+
+## ✨ Neue interaktive Features
+
+- **📊 Live-Scoring**: Verfolge deine richtigen und falschen Antworten in Echtzeit
+- **🎯 Sofortiges Feedback**: Erhalte sofort Rückmeldung bei jeder Antwort
+- **🔊 Erfolgssound**: Höre einen kleinen Erfolgsklang bei richtigen Antworten
+- **📈 Fortschrittsanzeige**: Sieh wie viele Aufgaben du bereits bearbeitet hast
+- **🏆 Motivierende Nachrichten**: Erhalte ermutigende Nachrichten basierend auf deiner Leistung
+- **💡 Hilfe bei falschen Antworten**: Die richtige Antwort wird bei Fehlern angezeigt
+- **⌨️ Tastatur-Support**: Drücke Enter um eine Antwort zu bestätigen
 
 ## 🖨️ Druckfunktion
 

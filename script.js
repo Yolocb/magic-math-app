@@ -2,6 +2,9 @@ class MathApp {
     constructor() {
         this.exercises = [];
         this.selectedTypes = [];
+        this.correctAnswers = 0;
+        this.incorrectAnswers = 0;
+        this.answeredCount = 0;
         this.init();
     }
 
@@ -112,6 +115,12 @@ class MathApp {
             case 'minusrechnen':
                 exercise = this.createMinusExercise(exercise);
                 break;
+            case 'malrechnen':
+                exercise = this.createMalExercise(exercise);
+                break;
+            case 'zahlenfolge':
+                exercise = this.createZahlenfolgeExercise(exercise);
+                break;
         }
 
         return exercise;
@@ -164,10 +173,65 @@ class MathApp {
         return exercise;
     }
 
+    createMalExercise(exercise) {
+        // Einfache Multiplikation für Erstklässler (1x1 bis 5x5)
+        const num1 = Math.floor(Math.random() * 5) + 1; // 1-5
+        const num2 = Math.floor(Math.random() * 5) + 1; // 1-5
+        
+        exercise.question = `${num1} × ${num2} = ___`;
+        exercise.answer = num1 * num2;
+        exercise.typeName = 'Malrechnen';
+        
+        return exercise;
+    }
+
+    createZahlenfolgeExercise(exercise) {
+        // Verschiedene Arten von Zahlenfolgen
+        const patterns = [
+            // Aufsteigende Folgen
+            { start: 1, step: 1, length: 5, missing: 3 }, // 1, 2, ?, 4, 5
+            { start: 2, step: 2, length: 5, missing: 2 }, // 2, ?, 6, 8, 10
+            { start: 5, step: 5, length: 4, missing: 2 }, // 5, ?, 15, 20
+            { start: 10, step: 10, length: 4, missing: 1 }, // ?, 20, 30, 40
+            // Absteigende Folgen
+            { start: 10, step: -1, length: 5, missing: 2 }, // 10, ?, 8, 7, 6
+            { start: 20, step: -2, length: 5, missing: 3 }, // 20, 18, ?, 14, 12
+        ];
+        
+        const pattern = patterns[Math.floor(Math.random() * patterns.length)];
+        const sequence = [];
+        
+        // Generiere die Zahlenfolge
+        for (let i = 0; i < pattern.length; i++) {
+            sequence.push(pattern.start + (i * pattern.step));
+        }
+        
+        const missingIndex = pattern.missing;
+        const correctAnswer = sequence[missingIndex];
+        
+        // Erstelle die Frage mit der fehlenden Zahl
+        const questionSequence = sequence.map((num, index) => 
+            index === missingIndex ? '___' : num
+        ).join(', ');
+        
+        exercise.question = `Welche Zahl fehlt? ${questionSequence}`;
+        exercise.answer = correctAnswer;
+        exercise.typeName = 'Zahlenfolge';
+        
+        return exercise;
+    }
+
     displayExercises() {
         const exercisesContainer = document.getElementById('exercises');
         const exerciseList = document.getElementById('exerciseList');
         const exerciseTitle = exercisesContainer.querySelector('h2');
+        const checkAllBtn = document.getElementById('checkAllBtn');
+        
+        // Reset scores
+        this.correctAnswers = 0;
+        this.incorrectAnswers = 0;
+        this.answeredCount = 0;
+        this.updateScoreDisplay();
         
         // Aktualisiere die Überschrift mit der tatsächlichen Anzahl
         exerciseTitle.textContent = `Deine ${this.exercises.length} Aufgaben:`;
@@ -177,15 +241,30 @@ class MathApp {
         this.exercises.forEach(exercise => {
             const exerciseDiv = document.createElement('div');
             exerciseDiv.className = 'exercise-item';
+            exerciseDiv.dataset.exerciseId = exercise.number;
+            
+            // Replace ___ with input field in question
+            const questionWithInput = exercise.question.replace('___', 
+                `<input type="number" class="answer-input" data-answer="${exercise.answer}" placeholder="">`
+            );
             
             exerciseDiv.innerHTML = `
                 <span class="exercise-number">${exercise.number}</span>
                 <span class="exercise-type">${exercise.typeName}</span>
-                <div class="exercise-question">${exercise.question}</div>
+                <div class="exercise-question">${questionWithInput}</div>
+                <span class="feedback-icon"></span>
+                <div class="correct-answer">Richtige Antwort: ${exercise.answer}</div>
             `;
             
             exerciseList.appendChild(exerciseDiv);
         });
+        
+        // Add event listeners to input fields
+        this.bindAnswerInputs();
+        
+        // Show check all button
+        checkAllBtn.style.display = 'inline-block';
+        checkAllBtn.addEventListener('click', () => this.checkAllAnswers());
         
         exercisesContainer.style.display = 'block';
         
@@ -254,9 +333,158 @@ class MathApp {
         container.appendChild(printFooter);
     }
 
+    bindAnswerInputs() {
+        const answerInputs = document.querySelectorAll('.answer-input');
+        answerInputs.forEach(input => {
+            input.addEventListener('input', (e) => this.checkSingleAnswer(e.target));
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    this.checkSingleAnswer(e.target);
+                }
+            });
+        });
+    }
+
+    checkSingleAnswer(input) {
+        const userAnswer = parseInt(input.value);
+        const correctAnswer = parseInt(input.dataset.answer);
+        const exerciseItem = input.closest('.exercise-item');
+        const feedbackIcon = exerciseItem.querySelector('.feedback-icon');
+        const correctAnswerDiv = exerciseItem.querySelector('.correct-answer');
+        
+        if (input.value === '') {
+            // Reset if empty
+            exerciseItem.classList.remove('correct', 'incorrect');
+            feedbackIcon.classList.remove('show');
+            correctAnswerDiv.classList.remove('show');
+            return;
+        }
+        
+        if (userAnswer === correctAnswer) {
+            exerciseItem.classList.remove('incorrect');
+            exerciseItem.classList.add('correct');
+            feedbackIcon.textContent = '✅';
+            feedbackIcon.classList.add('show');
+            correctAnswerDiv.classList.remove('show');
+            this.playSuccessSound();
+        } else {
+            exerciseItem.classList.remove('correct');
+            exerciseItem.classList.add('incorrect');
+            feedbackIcon.textContent = '❌';
+            feedbackIcon.classList.add('show');
+            correctAnswerDiv.classList.add('show');
+        }
+        
+        this.updateScoreFromInputs();
+    }
+
+    checkAllAnswers() {
+        const answerInputs = document.querySelectorAll('.answer-input');
+        let allAnswered = true;
+        
+        answerInputs.forEach(input => {
+            if (input.value === '') {
+                allAnswered = false;
+                input.style.borderColor = '#ff6b6b';
+                setTimeout(() => {
+                    input.style.borderColor = '#ddd';
+                }, 1000);
+            } else {
+                this.checkSingleAnswer(input);
+            }
+        });
+        
+        if (!allAnswered) {
+            this.showMessage('Bitte beantworte alle Aufgaben! 📝', 'error');
+            return;
+        }
+        
+        const percentage = Math.round((this.correctAnswers / this.exercises.length) * 100);
+        let message = '';
+        
+        if (percentage === 100) {
+            message = `Perfekt! 🌟 Alle ${this.exercises.length} Aufgaben richtig! Du bist ein Mathe-Champion! 🏆`;
+        } else if (percentage >= 80) {
+            message = `Super gemacht! 🎉 ${this.correctAnswers} von ${this.exercises.length} Aufgaben richtig (${percentage}%)!`;
+        } else if (percentage >= 60) {
+            message = `Gut gemacht! 👍 ${this.correctAnswers} von ${this.exercises.length} Aufgaben richtig (${percentage}%). Weiter so!`;
+        } else {
+            message = `Nicht schlecht! 😊 ${this.correctAnswers} von ${this.exercises.length} Aufgaben richtig (${percentage}%). Übung macht den Meister!`;
+        }
+        
+        this.showMessage(message, 'success');
+    }
+
+    updateScoreFromInputs() {
+        const answerInputs = document.querySelectorAll('.answer-input');
+        let correct = 0;
+        let incorrect = 0;
+        let answered = 0;
+        
+        answerInputs.forEach(input => {
+            if (input.value !== '') {
+                answered++;
+                const userAnswer = parseInt(input.value);
+                const correctAnswer = parseInt(input.dataset.answer);
+                
+                if (userAnswer === correctAnswer) {
+                    correct++;
+                } else {
+                    incorrect++;
+                }
+            }
+        });
+        
+        this.correctAnswers = correct;
+        this.incorrectAnswers = incorrect;
+        this.answeredCount = answered;
+        this.updateScoreDisplay();
+    }
+
+    updateScoreDisplay() {
+        document.getElementById('correctScore').textContent = this.correctAnswers;
+        document.getElementById('incorrectScore').textContent = this.incorrectAnswers;
+        
+        const percentage = this.exercises.length > 0 ? 
+            Math.round((this.answeredCount / this.exercises.length) * 100) : 0;
+        document.getElementById('progressScore').textContent = `${percentage}%`;
+    }
+
+    playSuccessSound() {
+        // Create a simple success sound using Web Audio API
+        try {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+            oscillator.frequency.setValueAtTime(1000, audioContext.currentTime + 0.1);
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.2);
+        } catch (e) {
+            // Fallback if Web Audio API is not supported
+            console.log('Success!');
+        }
+    }
+
     resetApp() {
+        // Reset scores
+        this.correctAnswers = 0;
+        this.incorrectAnswers = 0;
+        this.answeredCount = 0;
+        
         // Verstecke Aufgaben
         document.getElementById('exercises').style.display = 'none';
+        
+        // Hide check all button
+        document.getElementById('checkAllBtn').style.display = 'none';
         
         // Entferne Print-Elemente
         const printHeader = document.querySelector('.print-header');
