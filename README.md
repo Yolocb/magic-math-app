@@ -4,7 +4,7 @@ Eine kinderfreundliche Web-Applikation für Mathematik-Übungen, speziell entwic
 
 ## 📋 Funktionen
 
-Die App bietet 6 verschiedene Arten von Mathe-Übungen:
+Die App bietet 5 verschiedene Arten von Mathe-Übungen:
 
 ### 1. 🔢 Halbieren
 - Das Kind muss die angezeigte Zahl halbieren
@@ -26,12 +26,7 @@ Die App bietet 6 verschiedene Arten von Mathe-Übungen:
 - Ergebnis ist immer positiv
 - Beispiel: "9 - 4 = ___"
 
-### 5. ✖️ Malrechnen (1x1)
-- Einfache Multiplikation für Erstklässler
-- Verwendet Zahlen zwischen 1 und 5
-- Beispiel: "3 × 4 = ___"
-
-### 6. 🔢 Zahlenfolgen
+### 5. 🔢 Zahlenfolgen
 - Das Kind muss fehlende Zahlen in Sequenzen finden
 - Aufsteigende und absteigende Folgen
 - Beispiel: "Welche Zahl fehlt? 2, 4, ___, 8, 10"

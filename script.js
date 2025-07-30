@@ -115,9 +115,6 @@ class MathApp {
             case 'minusrechnen':
                 exercise = this.createMinusExercise(exercise);
                 break;
-            case 'malrechnen':
-                exercise = this.createMalExercise(exercise);
-                break;
             case 'zahlenfolge':
                 exercise = this.createZahlenfolgeExercise(exercise);
                 break;
@@ -169,18 +166,6 @@ class MathApp {
         exercise.question = `${num1} - ${num2} = ___`;
         exercise.answer = num1 - num2;
         exercise.typeName = 'Minusrechnen';
-        
-        return exercise;
-    }
-
-    createMalExercise(exercise) {
-        // Einfache Multiplikation für Erstklässler (1x1 bis 5x5)
-        const num1 = Math.floor(Math.random() * 5) + 1; // 1-5
-        const num2 = Math.floor(Math.random() * 5) + 1; // 1-5
-        
-        exercise.question = `${num1} × ${num2} = ___`;
-        exercise.answer = num1 * num2;
-        exercise.typeName = 'Malrechnen';
         
         return exercise;
     }
