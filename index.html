@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magische Zahlen - Mathe für Erstklässler</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Magische Zahlen 🎯</h1>
+            <p>Wähle deine Lieblings-Mathe-Übungen aus!</p>
+        </header>
+
+        <div class="exercise-selection">
+            <h2>Welche Übungen möchtest du machen?</h2>
+            <div class="number-selection">
+                <h3>Wie viele Aufgaben möchtest du?</h3>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="exerciseCount" value="10" checked>
+                        <span class="radio-checkmark">10</span>
+                        Aufgaben
+                    </label>
+                    
+                    <label class="radio-label">
+                        <input type="radio" name="exerciseCount" value="15">
+                        <span class="radio-checkmark">15</span>
+                        Aufgaben
+                    </label>
+                    
+                    <label class="radio-label">
+                        <input type="radio" name="exerciseCount" value="20">
+                        <span class="radio-checkmark">20</span>
+                        Aufgaben
+                    </label>
+                </div>
+            </div>
+            <div class="checkbox-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="halbieren" value="halbieren">
+                    <span class="checkmark">➗</span>
+                    Halbieren
+                </label>
+                
+                <label class="checkbox-label">
+                    <input type="checkbox" id="verdoppeln" value="verdoppeln">
+                    <span class="checkmark">✖️</span>
+                    Verdoppeln
+                </label>
+                
+                <label class="checkbox-label">
+                    <input type="checkbox" id="plusrechnen" value="plusrechnen">
+                    <span class="checkmark">➕</span>
+                    Plusrechnen
+                </label>
+                
+                <label class="checkbox-label">
+                    <input type="checkbox" id="minusrechnen" value="minusrechnen">
+                    <span class="checkmark">➖</span>
+                    Minusrechnen
+                </label>
+            </div>
+            
+            <button id="generateBtn" class="magic-button">
+                ✨ Magische Zahlen ✨
+            </button>
+        </div>
+
+        <div id="exercises" class="exercises-container" style="display: none;">
+            <h2>Deine 10 Aufgaben:</h2>
+            <div id="exerciseList" class="exercise-list"></div>
+            <div class="button-group">
+                <button id="printBtn" class="print-button">
+                    🖨️ Aufgaben drucken
+                </button>
+                <button id="newGameBtn" class="new-game-button">
+                    🎲 Neue Aufgaben
+                </button>
+            </div>
+        </div>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
