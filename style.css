@@ -206,6 +206,37 @@ header p {
     font-size: 1.5em;
 }
 
+.score-display {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.score-item {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 120px;
+}
+
+.score-label {
+    display: block;
+    font-size: 0.9em;
+    opacity: 0.9;
+    margin-bottom: 5px;
+}
+
+.score-value {
+    display: block;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
 .exercise-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -228,6 +259,59 @@ header p {
 .exercise-item:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.exercise-item.correct {
+    background: #d4edda;
+    border-color: #28a745;
+}
+
+.exercise-item.incorrect {
+    background: #f8d7da;
+    border-color: #dc3545;
+}
+
+.answer-input {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    width: 80px;
+    margin: 10px 5px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.answer-input:focus {
+    outline: none;
+    border-color: #4ecdc4;
+    box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.2);
+}
+
+.feedback-icon {
+    font-size: 1.5em;
+    margin-left: 10px;
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.feedback-icon.show {
+    opacity: 1;
+}
+
+.correct-answer {
+    color: #28a745;
+    font-size: 0.9em;
+    margin-top: 5px;
+    display: none;
+}
+
+.correct-answer.show {
+    display: block;
 }
 
 .exercise-number {
@@ -258,7 +342,7 @@ header p {
     flex-wrap: wrap;
 }
 
-.new-game-button, .print-button {
+.new-game-button, .print-button, .check-button {
     border: none;
     padding: 12px 25px;
     font-size: 1.1em;
@@ -279,7 +363,11 @@ header p {
     background: linear-gradient(45deg, #6c5ce7, #a29bfe);
 }
 
-.new-game-button:hover, .print-button:hover {
+.check-button {
+    background: linear-gradient(45deg, #00b894, #00cec9);
+}
+
+.new-game-button:hover, .print-button:hover, .check-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
 }
