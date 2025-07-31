@@ -8,10 +8,12 @@ class MathApp {
         this.currentGrade = 1;
         this.points = 0;
         this.stars = 0;
+        this.currentTheme = 'standard';
         this.init();
     }
 
     init() {
+        this.loadTheme();
         this.bindEvents();
         this.updateCheckboxStyles();
         this.updateRadioStyles();
@@ -42,6 +44,15 @@ class MathApp {
             });
         });
 
+        // Theme-Buttons Event Listeners
+        const themeButtons = document.querySelectorAll('.theme-btn');
+        themeButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const theme = e.currentTarget.dataset.theme;
+                this.setTheme(theme);
+            });
+        });
+
         // Event delegation für dynamisch erstellte Checkboxen und Radio-Buttons
         document.addEventListener('change', (e) => {
             if (e.target.type === 'checkbox') {
@@ -50,6 +61,117 @@ class MathApp {
                 this.updateRadioStyles();
             }
         });
+    }
+
+    // Theme Management Methoden
+    loadTheme() {
+        // Lade gespeichertes Theme aus localStorage
+        const savedTheme = localStorage.getItem('mathAppTheme');
+        if (savedTheme) {
+            this.currentTheme = savedTheme;
+        }
+        this.applyTheme(this.currentTheme);
+        this.updateThemeButtons();
+    }
+
+    setTheme(theme) {
+        this.currentTheme = theme;
+        this.applyTheme(theme);
+        this.saveTheme(theme);
+        this.updateThemeButtons();
+        
+        // Zeige Theme-Wechsel Nachricht
+        const themeNames = {
+            'standard': 'Standard',
+            'girls': 'Mädchen',
+            'pirates': 'Piraten',
+            'space': 'Weltraum',
+            'unicorn': 'Einhorn'
+        };
+        this.showMessage(`${themeNames[theme]}-Design aktiviert! 🎨`, 'success');
+    }
+
+    applyTheme(theme) {
+        // Entferne alle Theme-Klassen
+        document.body.classList.remove('theme-standard', 'theme-girls', 'theme-pirates', 'theme-space', 'theme-unicorn');
+        
+        // Füge neue Theme-Klasse hinzu (außer für Standard)
+        if (theme !== 'standard') {
+            document.body.classList.add(`theme-${theme}`);
+        }
+
+        // Theme-spezifische Icons und Anpassungen
+        this.updateThemeSpecificElements(theme);
+    }
+
+    updateThemeSpecificElements(theme) {
+        // Aktualisiere Konfetti-Icons basierend auf dem Theme
+        const confetti = document.querySelector('.confetti');
+        if (confetti) {
+            let confettiIcons = [];
+            
+            switch (theme) {
+                case 'girls':
+                    confettiIcons = ['💖', '🌸', '🦄', '✨', '🌟', '💕', '🎀', '🌺'];
+                    break;
+                case 'pirates':
+                    confettiIcons = ['🏴‍☠️', '⚓', '🗡️', '💰', '🦜', '💎', '🏴‍☠️', '⚓'];
+                    break;
+                case 'space':
+                    confettiIcons = ['🚀', '🌟', '🪐', '👨‍🚀', '🛸', '⭐', '🌙', '✨'];
+                    break;
+                case 'unicorn':
+                    confettiIcons = ['🦄', '🌈', '✨', '💖', '🌟', '💫', '🎀', '🌸'];
+                    break;
+                default:
+                    confettiIcons = ['🎉', '⭐', '🎊', '✨', '🌟', '🎈', '🎁', '🏅'];
+            }
+            
+            const confettiSpans = confetti.querySelectorAll('span');
+            confettiSpans.forEach((span, index) => {
+                if (confettiIcons[index]) {
+                    span.textContent = confettiIcons[index];
+                }
+            });
+        }
+
+        // Aktualisiere Stern-Icons für verschiedene Themes
+        const stars = document.querySelectorAll('.star');
+        let starIcon = '⭐';
+        
+        switch (theme) {
+            case 'girls':
+                starIcon = '💖';
+                break;
+            case 'pirates':
+                starIcon = '💰';
+                break;
+            case 'space':
+                starIcon = '🌟';
+                break;
+            case 'unicorn':
+                starIcon = '🦄';
+                break;
+        }
+        
+        stars.forEach(star => {
+            star.textContent = starIcon;
+        });
+    }
+
+    updateThemeButtons() {
+        const themeButtons = document.querySelectorAll('.theme-btn');
+        themeButtons.forEach(button => {
+            if (button.dataset.theme === this.currentTheme) {
+                button.classList.add('active');
+            } else {
+                button.classList.remove('active');
+            }
+        });
+    }
+
+    saveTheme(theme) {
+        localStorage.setItem('mathAppTheme', theme);
     }
 
     updateCheckboxStyles() {
@@ -781,7 +903,25 @@ class MathApp {
         const starContainer = document.getElementById('starContainer');
         const star = document.createElement('span');
         star.className = 'star';
-        star.textContent = '⭐';
+        
+        // Theme-spezifische Stern-Icons
+        let starIcon = '⭐';
+        switch (this.currentTheme) {
+            case 'girls':
+                starIcon = '💖';
+                break;
+            case 'pirates':
+                starIcon = '💰';
+                break;
+            case 'space':
+                starIcon = '🌟';
+                break;
+            case 'unicorn':
+                starIcon = '🦄';
+                break;
+        }
+        
+        star.textContent = starIcon;
         starContainer.appendChild(star);
         this.stars++;
     }
