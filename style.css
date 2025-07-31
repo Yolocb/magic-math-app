@@ -234,12 +234,17 @@ body {
 
 /* Welcome Screen Styles */
 .welcome-screen {
-    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .welcome-container {
@@ -250,6 +255,8 @@ body {
     width: 100%;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     animation: welcomeSlideIn 0.8s ease-out;
+    margin: 0 auto;
+    text-align: center;
 }
 
 @keyframes welcomeSlideIn {
@@ -311,6 +318,8 @@ body {
     font-weight: bold;
     transition: all 0.3s ease;
     background: #f8f9fa;
+    margin: 0 auto;
+    display: block;
 }
 
 .name-input:focus {
