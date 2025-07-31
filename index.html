@@ -70,6 +70,22 @@
 
         <div id="exercises" class="exercises-container" style="display: none;">
             <h2>Deine 10 Aufgaben:</h2>
+            
+            <!-- Belohnungssystem -->
+            <div class="reward-system">
+                <div class="points-display">
+                    <span class="points-label">Punkte:</span>
+                    <span id="pointsScore" class="points-value">0</span>
+                    <div id="starContainer" class="star-container"></div>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar">
+                        <div id="progressBar" class="progress-fill"></div>
+                    </div>
+                    <span class="progress-text">Fortschritt</span>
+                </div>
+            </div>
+            
             <div class="score-display">
                 <div class="score-item">
                     <span class="score-label">Richtig:</span>
@@ -99,6 +115,30 @@
         </div>
 
         <div id="message" class="message"></div>
+        
+        <!-- Belohnungs-Overlay -->
+        <div id="rewardOverlay" class="reward-overlay" style="display: none;">
+            <div class="reward-content">
+                <div id="rewardAnimation" class="reward-animation">
+                    <div class="trophy">🏆</div>
+                    <div class="confetti">
+                        <span>🎉</span><span>⭐</span><span>🎊</span><span>✨</span>
+                        <span>🌟</span><span>🎈</span><span>🎁</span><span>🏅</span>
+                    </div>
+                </div>
+                <h2 id="rewardTitle" class="reward-title">Du bist ein Mathe-Meister!</h2>
+                <p id="rewardMessage" class="reward-message">Fantastisch! Du hast alle Aufgaben gemeistert!</p>
+                <button id="closeRewardBtn" class="reward-close-btn">Weiter üben! 🚀</button>
+            </div>
+        </div>
+        
+        <!-- Motivations-Popup -->
+        <div id="motivationPopup" class="motivation-popup" style="display: none;">
+            <div class="motivation-content">
+                <div class="motivation-stars">⭐⭐⭐⭐⭐</div>
+                <p id="motivationText" class="motivation-text">Super gemacht!</p>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
