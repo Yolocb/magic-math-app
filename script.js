@@ -6,6 +6,8 @@ class MathApp {
         this.incorrectAnswers = 0;
         this.answeredCount = 0;
         this.currentGrade = 1;
+        this.points = 0;
+        this.stars = 0;
         this.init();
     }
 
@@ -25,6 +27,12 @@ class MathApp {
         generateBtn.addEventListener('click', () => this.generateExercises());
         newGameBtn.addEventListener('click', () => this.resetApp());
         printBtn.addEventListener('click', () => this.printExercises());
+        
+        // Belohnungssystem Event Listeners
+        const closeRewardBtn = document.getElementById('closeRewardBtn');
+        if (closeRewardBtn) {
+            closeRewardBtn.addEventListener('click', () => this.closeRewardOverlay());
+        }
 
         gradeRadios.forEach(radio => {
             radio.addEventListener('change', () => {
@@ -469,11 +477,14 @@ class MathApp {
         const exerciseTitle = exercisesContainer.querySelector('h2');
         const checkAllBtn = document.getElementById('checkAllBtn');
         
-        // Reset scores
+        // Reset scores und Belohnungssystem
         this.correctAnswers = 0;
         this.incorrectAnswers = 0;
         this.answeredCount = 0;
+        this.points = 0;
+        this.stars = 0;
         this.updateScoreDisplay();
+        this.updateRewardSystem();
         
         // Aktualisiere die Überschrift mit der tatsächlichen Anzahl
         exerciseTitle.textContent = `Deine ${this.exercises.length} Aufgaben:`;
@@ -639,6 +650,7 @@ class MathApp {
             feedbackIcon.classList.add('show');
             correctAnswerDiv.classList.remove('show');
             this.playSuccessSound();
+            this.addReward();
         } else {
             exerciseItem.classList.remove('correct');
             exerciseItem.classList.add('incorrect');
@@ -725,6 +737,8 @@ class MathApp {
         this.incorrectAnswers = incorrect;
         this.answeredCount = answered;
         this.updateScoreDisplay();
+        this.updateRewardSystem();
+        this.checkForCompletion();
     }
 
     updateScoreDisplay() {
@@ -734,6 +748,112 @@ class MathApp {
         const percentage = this.exercises.length > 0 ? 
             Math.round((this.answeredCount / this.exercises.length) * 100) : 0;
         document.getElementById('progressScore').textContent = `${percentage}%`;
+    }
+
+    // Belohnungssystem Methoden
+    updateRewardSystem() {
+        // Punkte aktualisieren
+        document.getElementById('pointsScore').textContent = this.points;
+        
+        // Fortschrittsbalken aktualisieren
+        const progressBar = document.getElementById('progressBar');
+        const progressPercentage = this.exercises.length > 0 ? 
+            (this.points / this.exercises.length) * 100 : 0;
+        progressBar.style.width = `${progressPercentage}%`;
+    }
+
+    addReward() {
+        // Punkt hinzufügen
+        this.points++;
+        
+        // Stern hinzufügen
+        this.addStar();
+        
+        // Motivationsnachricht nach 5 richtigen Antworten
+        if (this.points > 0 && this.points % 5 === 0) {
+            this.showMotivationPopup();
+        }
+        
+        this.updateRewardSystem();
+    }
+
+    addStar() {
+        const starContainer = document.getElementById('starContainer');
+        const star = document.createElement('span');
+        star.className = 'star';
+        star.textContent = '⭐';
+        starContainer.appendChild(star);
+        this.stars++;
+    }
+
+    showMotivationPopup() {
+        const motivationPopup = document.getElementById('motivationPopup');
+        const motivationText = document.getElementById('motivationText');
+        
+        const motivationMessages = [
+            'Super gemacht! 🌟',
+            'Du bist großartig! 🎉',
+            'Fantastisch! 🚀',
+            'Weiter so! 💪',
+            'Du rockst! 🎸',
+            'Unglaublich! ✨',
+            'Perfekt! 🏆',
+            'Toll gemacht! 👏'
+        ];
+        
+        const randomMessage = motivationMessages[Math.floor(Math.random() * motivationMessages.length)];
+        motivationText.textContent = randomMessage;
+        
+        motivationPopup.style.display = 'block';
+        
+        // Popup nach 2 Sekunden automatisch verstecken
+        setTimeout(() => {
+            motivationPopup.style.display = 'none';
+        }, 2000);
+    }
+
+    checkForCompletion() {
+        // Prüfe ob alle Aufgaben beantwortet wurden
+        if (this.answeredCount === this.exercises.length && this.exercises.length > 0) {
+            setTimeout(() => {
+                this.showRewardOverlay();
+            }, 1000); // Kurze Verzögerung für bessere UX
+        }
+    }
+
+    showRewardOverlay() {
+        const rewardOverlay = document.getElementById('rewardOverlay');
+        const rewardTitle = document.getElementById('rewardTitle');
+        const rewardMessage = document.getElementById('rewardMessage');
+        
+        // Personalisierte Nachrichten basierend auf der Leistung
+        const percentage = Math.round((this.correctAnswers / this.exercises.length) * 100);
+        
+        let title, message;
+        
+        if (percentage === 100) {
+            title = 'Du bist ein Mathe-Meister! 🏆';
+            message = `Perfekt! Du hast alle ${this.exercises.length} Aufgaben richtig gelöst und ${this.points} Punkte gesammelt! Du bist ein wahrer Champion!`;
+        } else if (percentage >= 80) {
+            title = 'Fantastische Leistung! 🌟';
+            message = `Super! Du hast ${this.correctAnswers} von ${this.exercises.length} Aufgaben richtig gelöst und ${this.points} Punkte gesammelt! Das ist eine großartige Leistung!`;
+        } else if (percentage >= 60) {
+            title = 'Gut gemacht! 👍';
+            message = `Toll! Du hast ${this.correctAnswers} von ${this.exercises.length} Aufgaben richtig gelöst und ${this.points} Punkte gesammelt! Weiter so!`;
+        } else {
+            title = 'Weiter üben! 💪';
+            message = `Du hast ${this.correctAnswers} von ${this.exercises.length} Aufgaben richtig gelöst und ${this.points} Punkte gesammelt! Übung macht den Meister - probiere es nochmal!`;
+        }
+        
+        rewardTitle.textContent = title;
+        rewardMessage.textContent = message;
+        
+        rewardOverlay.style.display = 'flex';
+    }
+
+    closeRewardOverlay() {
+        const rewardOverlay = document.getElementById('rewardOverlay');
+        rewardOverlay.style.display = 'none';
     }
 
     playSuccessSound() {
@@ -761,10 +881,21 @@ class MathApp {
     }
 
     resetApp() {
-        // Reset scores
+        // Reset scores und Belohnungssystem
         this.correctAnswers = 0;
         this.incorrectAnswers = 0;
         this.answeredCount = 0;
+        this.points = 0;
+        this.stars = 0;
+        
+        // Sterne-Container leeren
+        const starContainer = document.getElementById('starContainer');
+        if (starContainer) {
+            starContainer.innerHTML = '';
+        }
+        
+        // Belohnungs-Overlay verstecken
+        this.closeRewardOverlay();
         
         // Verstecke Aufgaben
         document.getElementById('exercises').style.display = 'none';
