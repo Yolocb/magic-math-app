@@ -213,6 +213,16 @@ body.theme-unicorn .container::after {
     50% { transform: translateY(-10px); }
 }
 
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 body {
     font-family: var(--font-family);
     background: var(--background-gradient);
@@ -220,6 +230,394 @@ body {
     padding: 20px;
     color: var(--text-color);
     transition: all 0.5s ease;
+}
+
+/* Welcome Screen Styles */
+.welcome-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+}
+
+.welcome-container {
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    animation: welcomeSlideIn 0.8s ease-out;
+}
+
+@keyframes welcomeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.welcome-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.welcome-header h1 {
+    font-size: 2.5em;
+    color: #667eea;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-header p {
+    font-size: 1.3em;
+    color: #666;
+    font-weight: 500;
+}
+
+.welcome-form {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+
+.form-section {
+    text-align: center;
+}
+
+.form-section h2 {
+    font-size: 1.4em;
+    color: #4ecdc4;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Name Input */
+.name-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px 20px;
+    font-size: 1.2em;
+    border: 3px solid #e9ecef;
+    border-radius: 15px;
+    text-align: center;
+    font-family: inherit;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.name-input:focus {
+    outline: none;
+    border-color: #4ecdc4;
+    background: white;
+    box-shadow: 0 0 0 5px rgba(78, 205, 196, 0.2);
+    transform: translateY(-2px);
+}
+
+.name-input::placeholder {
+    color: #adb5bd;
+    font-weight: normal;
+}
+
+/* Grade Selection */
+.grade-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.grade-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 25px;
+    border: 3px solid #e9ecef;
+    border-radius: 20px;
+    background: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    min-width: 120px;
+}
+
+.grade-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-color: #4ecdc4;
+}
+
+.grade-btn.selected {
+    background: #4ecdc4;
+    border-color: #4ecdc4;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(78, 205, 196, 0.3);
+}
+
+.grade-number {
+    font-size: 2em;
+    font-weight: bold;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4ecdc4;
+}
+
+.grade-btn.selected .grade-number {
+    background: rgba(255, 255, 255, 0.9);
+    color: #4ecdc4;
+}
+
+.grade-text {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+/* Avatar Gallery */
+.avatar-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.avatar-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.avatar-option:hover {
+    transform: translateY(-5px);
+}
+
+.avatar-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #f8f9fa;
+    border: 4px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5em;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.avatar-option:hover .avatar-circle {
+    border-color: #4ecdc4;
+    background: white;
+    box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
+}
+
+.avatar-option.selected .avatar-circle {
+    border-color: #4ecdc4;
+    background: #4ecdc4;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(78, 205, 196, 0.3);
+}
+
+.avatar-name {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.avatar-option.selected .avatar-name {
+    color: #4ecdc4;
+}
+
+/* Start Button */
+.start-button {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    font-size: 1.4em;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    font-family: inherit;
+    min-width: 200px;
+}
+
+.start-button:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.start-button:disabled {
+    background: #adb5bd;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Player Info Display */
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.player-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.player-avatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.player-avatar::after {
+    content: '✏️';
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7em;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.player-avatar:hover::after {
+    opacity: 1;
+}
+
+.player-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.player-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+
+.player-name:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.player-grade {
+    font-size: 0.9em;
+    color: var(--text-color);
+    opacity: 0.8;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+
+.player-grade:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .welcome-container {
+        padding: 30px 20px;
+        margin: 10px;
+    }
+    
+    .welcome-header h1 {
+        font-size: 2em;
+    }
+    
+    .grade-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .grade-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .avatar-gallery {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+    
+    .avatar-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 2em;
+    }
+    
+    .player-info {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .avatar-gallery {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .welcome-header h1 {
+        font-size: 1.8em;
+    }
+    
+    .form-section h2 {
+        font-size: 1.2em;
+    }
 }
 
 .container {
@@ -1125,6 +1523,510 @@ body.theme-unicorn .container {
         border-top: 2px solid #333;
         font-size: 10pt;
         color: #666;
+    }
+}
+
+/* Avatar Change Modal Styles */
+.avatar-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.avatar-modal-content {
+    background: white;
+    border-radius: 25px;
+    padding: 30px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: bounceIn 0.5s ease-out;
+}
+
+.avatar-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.avatar-modal-header h2 {
+    font-size: 1.5em;
+    color: #4ecdc4;
+    margin: 0;
+}
+
+.avatar-modal-close {
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-modal-close:hover {
+    background: #c82333;
+    transform: scale(1.1);
+}
+
+.avatar-modal-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.avatar-modal-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.avatar-modal-option:hover {
+    transform: translateY(-5px);
+}
+
+.avatar-modal-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #f8f9fa;
+    border: 4px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2em;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.avatar-modal-option:hover .avatar-modal-circle {
+    border-color: #4ecdc4;
+    background: white;
+    box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
+}
+
+.avatar-modal-option.selected .avatar-modal-circle {
+    border-color: #4ecdc4;
+    background: #4ecdc4;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(78, 205, 196, 0.3);
+}
+
+.avatar-modal-name {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.avatar-modal-option.selected .avatar-modal-name {
+    color: #4ecdc4;
+}
+
+.avatar-modal-footer {
+    text-align: center;
+    padding-top: 15px;
+    border-top: 2px solid #e9ecef;
+}
+
+.save-avatar-btn {
+    background: linear-gradient(45deg, #4ecdc4, #44a08d);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    font-family: inherit;
+    min-width: 180px;
+}
+
+.save-avatar-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.save-avatar-btn:disabled {
+    background: #adb5bd;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design für Avatar Modal */
+@media (max-width: 768px) {
+    .avatar-modal-content {
+        padding: 25px 20px;
+        width: 95%;
+    }
+    
+    .avatar-modal-gallery {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+    
+    .avatar-modal-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 2em;
+    }
+    
+    .avatar-modal-header h2 {
+        font-size: 1.3em;
+    }
+}
+
+@media (max-width: 480px) {
+    .avatar-modal-gallery {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .avatar-modal-circle {
+        width: 55px;
+        height: 55px;
+        font-size: 1.8em;
+    }
+}
+
+/* Profile Edit Modal Styles */
+.profile-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.profile-modal-content {
+    background: white;
+    border-radius: 25px;
+    padding: 30px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: bounceIn 0.5s ease-out;
+}
+
+.profile-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.profile-modal-header h2 {
+    font-size: 1.6em;
+    color: #4ecdc4;
+    margin: 0;
+}
+
+.profile-modal-close {
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-modal-close:hover {
+    background: #c82333;
+    transform: scale(1.1);
+}
+
+.profile-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.profile-section {
+    text-align: center;
+}
+
+.profile-section h3 {
+    font-size: 1.3em;
+    color: #4ecdc4;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Profile Name Input */
+.profile-name-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px 20px;
+    font-size: 1.2em;
+    border: 3px solid #e9ecef;
+    border-radius: 15px;
+    text-align: center;
+    font-family: inherit;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.profile-name-input:focus {
+    outline: none;
+    border-color: #4ecdc4;
+    background: white;
+    box-shadow: 0 0 0 5px rgba(78, 205, 196, 0.2);
+    transform: translateY(-2px);
+}
+
+.profile-name-input::placeholder {
+    color: #adb5bd;
+    font-weight: normal;
+}
+
+/* Profile Grade Selection */
+.profile-grade-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.profile-grade-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 25px;
+    border: 3px solid #e9ecef;
+    border-radius: 20px;
+    background: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    min-width: 120px;
+}
+
+.profile-grade-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-color: #4ecdc4;
+}
+
+.profile-grade-btn.selected {
+    background: #4ecdc4;
+    border-color: #4ecdc4;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(78, 205, 196, 0.3);
+}
+
+.profile-grade-number {
+    font-size: 2em;
+    font-weight: bold;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4ecdc4;
+}
+
+.profile-grade-btn.selected .profile-grade-number {
+    background: rgba(255, 255, 255, 0.9);
+    color: #4ecdc4;
+}
+
+.profile-grade-text {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+/* Profile Avatar Gallery */
+.profile-avatar-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.profile-avatar-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.profile-avatar-option:hover {
+    transform: translateY(-5px);
+}
+
+.profile-avatar-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #f8f9fa;
+    border: 4px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2em;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.profile-avatar-option:hover .profile-avatar-circle {
+    border-color: #4ecdc4;
+    background: white;
+    box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
+}
+
+.profile-avatar-option.selected .profile-avatar-circle {
+    border-color: #4ecdc4;
+    background: #4ecdc4;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(78, 205, 196, 0.3);
+}
+
+.profile-avatar-name {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.profile-avatar-option.selected .profile-avatar-name {
+    color: #4ecdc4;
+}
+
+.profile-modal-footer {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 2px solid #e9ecef;
+    margin-top: 10px;
+}
+
+.save-profile-btn {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    font-family: inherit;
+    min-width: 200px;
+}
+
+.save-profile-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.save-profile-btn:disabled {
+    background: #adb5bd;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design für Profile Modal */
+@media (max-width: 768px) {
+    .profile-modal-content {
+        padding: 25px 20px;
+        width: 95%;
+    }
+    
+    .profile-grade-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .profile-grade-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .profile-avatar-gallery {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+    
+    .profile-avatar-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 2em;
+    }
+    
+    .profile-modal-header h2 {
+        font-size: 1.4em;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-avatar-gallery {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .profile-avatar-circle {
+        width: 55px;
+        height: 55px;
+        font-size: 1.8em;
+    }
+    
+    .profile-section h3 {
+        font-size: 1.2em;
     }
 }
 

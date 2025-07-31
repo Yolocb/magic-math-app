@@ -7,8 +7,100 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <!-- Willkommensbildschirm -->
+    <div id="welcomeScreen" class="welcome-screen">
+        <div class="welcome-container">
+            <div class="welcome-header">
+                <h1>🎯 Willkommen bei den Magischen Zahlen! 🎯</h1>
+                <p>Lass uns gemeinsam Mathe lernen und Spaß haben!</p>
+            </div>
+
+            <div class="welcome-form">
+                <!-- Name eingeben -->
+                <div class="form-section">
+                    <h2>👋 Wie heißt du?</h2>
+                    <input type="text" id="playerName" class="name-input" placeholder="Dein Name..." maxlength="20">
+                </div>
+
+                <!-- Klassenstufe auswählen -->
+                <div class="form-section">
+                    <h2>📚 In welche Klasse gehst du?</h2>
+                    <div class="grade-buttons">
+                        <button class="grade-btn" data-grade="1">
+                            <span class="grade-number">1</span>
+                            <span class="grade-text">1. Klasse</span>
+                        </button>
+                        <button class="grade-btn" data-grade="2">
+                            <span class="grade-number">2</span>
+                            <span class="grade-text">2. Klasse</span>
+                        </button>
+                        <button class="grade-btn" data-grade="3">
+                            <span class="grade-number">3</span>
+                            <span class="grade-text">3. Klasse</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Avatar auswählen -->
+                <div class="form-section">
+                    <h2>🎭 Wähle deinen Avatar!</h2>
+                    <div class="avatar-gallery">
+                        <div class="avatar-option" data-avatar="cat">
+                            <div class="avatar-circle">🐱</div>
+                            <span class="avatar-name">Katze</span>
+                        </div>
+                        <div class="avatar-option" data-avatar="dog">
+                            <div class="avatar-circle">🐶</div>
+                            <span class="avatar-name">Hund</span>
+                        </div>
+                        <div class="avatar-option" data-avatar="fox">
+                            <div class="avatar-circle">🦊</div>
+                            <span class="avatar-name">Fuchs</span>
+                        </div>
+                        <div class="avatar-option" data-avatar="panda">
+                            <div class="avatar-circle">🐼</div>
+                            <span class="avatar-name">Panda</span>
+                        </div>
+                        <div class="avatar-option" data-avatar="unicorn">
+                            <div class="avatar-circle">🦄</div>
+                            <span class="avatar-name">Einhorn</span>
+                        </div>
+                        <div class="avatar-option" data-avatar="robot">
+                            <div class="avatar-circle">🤖</div>
+                            <span class="avatar-name">Roboter</span>
+                        </div>
+                        <div class="avatar-option" data-avatar="lion">
+                            <div class="avatar-circle">🦁</div>
+                            <span class="avatar-name">Löwe</span>
+                        </div>
+                        <div class="avatar-option" data-avatar="monkey">
+                            <div class="avatar-circle">🐵</div>
+                            <span class="avatar-name">Affe</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Start Button -->
+                <div class="form-section">
+                    <button id="startGameBtn" class="start-button" disabled>
+                        🚀 Los geht's!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hauptanwendung (zunächst versteckt) -->
+    <div id="mainApp" class="container" style="display: none;">
         <header>
+            <div class="player-info">
+                <div class="player-avatar" id="playerAvatarDisplay"></div>
+                <div class="player-details">
+                    <span class="player-name" id="playerNameDisplay"></span>
+                    <span class="player-grade" id="playerGradeDisplay"></span>
+                </div>
+            </div>
+            
             <h1>🎯 Magische Zahlen 🎯</h1>
             <p>Mathe-Übungen für die 1., 2. und 3. Klasse!</p>
             
@@ -164,6 +256,88 @@
             <div class="motivation-content">
                 <div class="motivation-stars">⭐⭐⭐⭐⭐</div>
                 <p id="motivationText" class="motivation-text">Super gemacht!</p>
+            </div>
+        </div>
+
+        <!-- Profile Edit Modal -->
+        <div id="profileEditModal" class="profile-modal" style="display: none;">
+            <div class="profile-modal-content">
+                <div class="profile-modal-header">
+                    <h2>👤 Profil bearbeiten</h2>
+                    <button class="profile-modal-close" id="closeProfileModal">✕</button>
+                </div>
+                
+                <div class="profile-edit-form">
+                    <!-- Name Section -->
+                    <div class="profile-section">
+                        <h3>👋 Dein Name</h3>
+                        <input type="text" id="editPlayerName" class="profile-name-input" placeholder="Dein Name..." maxlength="20">
+                    </div>
+
+                    <!-- Grade Section -->
+                    <div class="profile-section">
+                        <h3>📚 Deine Klasse</h3>
+                        <div class="profile-grade-buttons">
+                            <button class="profile-grade-btn" data-grade="1">
+                                <span class="profile-grade-number">1</span>
+                                <span class="profile-grade-text">1. Klasse</span>
+                            </button>
+                            <button class="profile-grade-btn" data-grade="2">
+                                <span class="profile-grade-number">2</span>
+                                <span class="profile-grade-text">2. Klasse</span>
+                            </button>
+                            <button class="profile-grade-btn" data-grade="3">
+                                <span class="profile-grade-number">3</span>
+                                <span class="profile-grade-text">3. Klasse</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Avatar Section -->
+                    <div class="profile-section">
+                        <h3>🎭 Dein Avatar</h3>
+                        <div class="profile-avatar-gallery">
+                            <div class="profile-avatar-option" data-avatar="cat">
+                                <div class="profile-avatar-circle">🐱</div>
+                                <span class="profile-avatar-name">Katze</span>
+                            </div>
+                            <div class="profile-avatar-option" data-avatar="dog">
+                                <div class="profile-avatar-circle">🐶</div>
+                                <span class="profile-avatar-name">Hund</span>
+                            </div>
+                            <div class="profile-avatar-option" data-avatar="fox">
+                                <div class="profile-avatar-circle">🦊</div>
+                                <span class="profile-avatar-name">Fuchs</span>
+                            </div>
+                            <div class="profile-avatar-option" data-avatar="panda">
+                                <div class="profile-avatar-circle">🐼</div>
+                                <span class="profile-avatar-name">Panda</span>
+                            </div>
+                            <div class="profile-avatar-option" data-avatar="unicorn">
+                                <div class="profile-avatar-circle">🦄</div>
+                                <span class="profile-avatar-name">Einhorn</span>
+                            </div>
+                            <div class="profile-avatar-option" data-avatar="robot">
+                                <div class="profile-avatar-circle">🤖</div>
+                                <span class="profile-avatar-name">Roboter</span>
+                            </div>
+                            <div class="profile-avatar-option" data-avatar="lion">
+                                <div class="profile-avatar-circle">🦁</div>
+                                <span class="profile-avatar-name">Löwe</span>
+                            </div>
+                            <div class="profile-avatar-option" data-avatar="monkey">
+                                <div class="profile-avatar-circle">🐵</div>
+                                <span class="profile-avatar-name">Affe</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-modal-footer">
+                    <button id="saveProfileBtn" class="save-profile-btn" disabled>
+                        ✅ Änderungen speichern
+                    </button>
+                </div>
             </div>
         </div>
     </div>

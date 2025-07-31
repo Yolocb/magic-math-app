@@ -9,15 +9,365 @@ class MathApp {
         this.points = 0;
         this.stars = 0;
         this.currentTheme = 'standard';
+        
+        // Player data
+        this.playerName = '';
+        this.playerGrade = 1;
+        this.playerAvatar = '';
+        
         this.init();
     }
 
     init() {
+        this.checkWelcomeScreen();
         this.loadTheme();
         this.bindEvents();
         this.updateCheckboxStyles();
         this.updateRadioStyles();
         this.loadExerciseOptions();
+    }
+
+    // Welcome Screen Management
+    checkWelcomeScreen() {
+        const playerData = this.loadPlayerData();
+        if (playerData && playerData.name && playerData.grade && playerData.avatar) {
+            // Player data exists, show main app
+            this.playerName = playerData.name;
+            this.playerGrade = playerData.grade;
+            this.playerAvatar = playerData.avatar;
+            this.showMainApp();
+        } else {
+            // No player data, show welcome screen
+            this.showWelcomeScreen();
+        }
+    }
+
+    showWelcomeScreen() {
+        document.getElementById('welcomeScreen').style.display = 'block';
+        document.getElementById('mainApp').style.display = 'none';
+        this.bindWelcomeEvents();
+    }
+
+    showMainApp() {
+        document.getElementById('welcomeScreen').style.display = 'none';
+        document.getElementById('mainApp').style.display = 'block';
+        this.updatePlayerDisplay();
+        this.setGradeFromPlayerData();
+        this.bindProfileEditEvents();
+    }
+
+    bindWelcomeEvents() {
+        const nameInput = document.getElementById('playerName');
+        const gradeButtons = document.querySelectorAll('.grade-btn');
+        const avatarOptions = document.querySelectorAll('.avatar-option');
+        const startButton = document.getElementById('startGameBtn');
+
+        // Name input event
+        nameInput.addEventListener('input', () => {
+            this.validateWelcomeForm();
+        });
+
+        // Grade selection events
+        gradeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                gradeButtons.forEach(btn => btn.classList.remove('selected'));
+                button.classList.add('selected');
+                this.playerGrade = parseInt(button.dataset.grade);
+                this.validateWelcomeForm();
+            });
+        });
+
+        // Avatar selection events
+        avatarOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                avatarOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                this.playerAvatar = option.dataset.avatar;
+                this.validateWelcomeForm();
+            });
+        });
+
+        // Start button event
+        startButton.addEventListener('click', () => {
+            this.startGame();
+        });
+    }
+
+    bindProfileEditEvents() {
+        const playerAvatar = document.getElementById('playerAvatarDisplay');
+        const playerName = document.getElementById('playerNameDisplay');
+        const playerGrade = document.getElementById('playerGradeDisplay');
+        const profileModal = document.getElementById('profileEditModal');
+        const closeModalBtn = document.getElementById('closeProfileModal');
+        const saveProfileBtn = document.getElementById('saveProfileBtn');
+
+        // Open modal when clicking on any player info element
+        [playerAvatar, playerName, playerGrade].forEach(element => {
+            element.addEventListener('click', () => {
+                this.openProfileModal();
+            });
+        });
+
+        // Close modal events
+        closeModalBtn.addEventListener('click', () => {
+            this.closeProfileModal();
+        });
+
+        // Close modal when clicking outside
+        profileModal.addEventListener('click', (e) => {
+            if (e.target === profileModal) {
+                this.closeProfileModal();
+            }
+        });
+
+        // Save profile button event
+        saveProfileBtn.addEventListener('click', () => {
+            this.saveProfile();
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && profileModal.style.display === 'flex') {
+                this.closeProfileModal();
+            }
+        });
+    }
+
+    openProfileModal() {
+        const profileModal = document.getElementById('profileEditModal');
+        const nameInput = document.getElementById('editPlayerName');
+        const gradeButtons = document.querySelectorAll('.profile-grade-btn');
+        const avatarOptions = document.querySelectorAll('.profile-avatar-option');
+        
+        // Reset all selections
+        gradeButtons.forEach(btn => btn.classList.remove('selected'));
+        avatarOptions.forEach(opt => opt.classList.remove('selected'));
+        
+        // Set current values
+        nameInput.value = this.playerName;
+        
+        // Set current grade
+        const currentGradeBtn = document.querySelector(`.profile-grade-btn[data-grade="${this.playerGrade}"]`);
+        if (currentGradeBtn) {
+            currentGradeBtn.classList.add('selected');
+        }
+        
+        // Set current avatar
+        const currentAvatarOption = document.querySelector(`.profile-avatar-option[data-avatar="${this.playerAvatar}"]`);
+        if (currentAvatarOption) {
+            currentAvatarOption.classList.add('selected');
+        }
+        
+        // Initialize temporary values
+        this.tempPlayerName = this.playerName;
+        this.tempPlayerGrade = this.playerGrade;
+        this.tempPlayerAvatar = this.playerAvatar;
+        
+        // Bind events for this modal session
+        this.bindProfileModalEvents();
+        
+        profileModal.style.display = 'flex';
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+        // Focus on name input
+        setTimeout(() => nameInput.focus(), 100);
+    }
+
+    bindProfileModalEvents() {
+        const nameInput = document.getElementById('editPlayerName');
+        const gradeButtons = document.querySelectorAll('.profile-grade-btn');
+        const avatarOptions = document.querySelectorAll('.profile-avatar-option');
+
+        // Name input event
+        nameInput.addEventListener('input', () => {
+            this.tempPlayerName = nameInput.value.trim();
+            this.validateProfileChanges();
+        });
+
+        // Grade selection events
+        gradeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                gradeButtons.forEach(btn => btn.classList.remove('selected'));
+                button.classList.add('selected');
+                this.tempPlayerGrade = parseInt(button.dataset.grade);
+                this.validateProfileChanges();
+            });
+        });
+
+        // Avatar selection events
+        avatarOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                avatarOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                this.tempPlayerAvatar = option.dataset.avatar;
+                this.validateProfileChanges();
+            });
+        });
+    }
+
+    validateProfileChanges() {
+        const saveProfileBtn = document.getElementById('saveProfileBtn');
+        
+        const hasChanges = this.tempPlayerName !== this.playerName ||
+                          this.tempPlayerGrade !== this.playerGrade ||
+                          this.tempPlayerAvatar !== this.playerAvatar;
+        
+        const isValid = this.tempPlayerName.length >= 2 &&
+                       this.tempPlayerGrade &&
+                       this.tempPlayerAvatar;
+        
+        const canSave = hasChanges && isValid;
+        
+        saveProfileBtn.disabled = !canSave;
+        
+        if (canSave) {
+            saveProfileBtn.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
+            saveProfileBtn.style.cursor = 'pointer';
+        } else {
+            saveProfileBtn.style.background = '#adb5bd';
+            saveProfileBtn.style.cursor = 'not-allowed';
+        }
+    }
+
+    closeProfileModal() {
+        const profileModal = document.getElementById('profileEditModal');
+        profileModal.style.display = 'none';
+        
+        // Restore body scroll
+        document.body.style.overflow = 'auto';
+        
+        // Reset temporary values
+        this.tempPlayerName = '';
+        this.tempPlayerGrade = 1;
+        this.tempPlayerAvatar = '';
+    }
+
+    saveProfile() {
+        if (!this.tempPlayerName || this.tempPlayerName.length < 2 || !this.tempPlayerGrade || !this.tempPlayerAvatar) {
+            return;
+        }
+
+        // Check what changed
+        const nameChanged = this.tempPlayerName !== this.playerName;
+        const gradeChanged = this.tempPlayerGrade !== this.playerGrade;
+        const avatarChanged = this.tempPlayerAvatar !== this.playerAvatar;
+
+        // Update player data
+        this.playerName = this.tempPlayerName;
+        this.playerGrade = this.tempPlayerGrade;
+        this.playerAvatar = this.tempPlayerAvatar;
+        
+        // Update player data in localStorage
+        this.savePlayerData({
+            name: this.playerName,
+            grade: this.playerGrade,
+            avatar: this.playerAvatar
+        });
+        
+        // Update display
+        this.updatePlayerDisplay();
+        
+        // Update grade in exercise selection if changed
+        if (gradeChanged) {
+            this.setGradeFromPlayerData();
+        }
+        
+        // Close modal
+        this.closeProfileModal();
+        
+        // Show success message
+        let changeMessages = [];
+        if (nameChanged) changeMessages.push('Name');
+        if (gradeChanged) changeMessages.push('Klasse');
+        if (avatarChanged) changeMessages.push('Avatar');
+        
+        const changesText = changeMessages.join(', ');
+        this.showMessage(`${changesText} erfolgreich geändert! 👤`, 'success');
+    }
+
+    validateWelcomeForm() {
+        const nameInput = document.getElementById('playerName');
+        const startButton = document.getElementById('startGameBtn');
+        
+        this.playerName = nameInput.value.trim();
+        
+        const isValid = this.playerName.length >= 2 && 
+                       this.playerGrade && 
+                       this.playerAvatar;
+        
+        startButton.disabled = !isValid;
+        
+        if (isValid) {
+            startButton.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
+            startButton.style.cursor = 'pointer';
+        } else {
+            startButton.style.background = '#adb5bd';
+            startButton.style.cursor = 'not-allowed';
+        }
+    }
+
+    startGame() {
+        // Save player data
+        this.savePlayerData({
+            name: this.playerName,
+            grade: this.playerGrade,
+            avatar: this.playerAvatar
+        });
+
+        // Animate transition to main app
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        welcomeScreen.style.animation = 'fadeOut 0.5s ease-out forwards';
+        
+        setTimeout(() => {
+            this.showMainApp();
+            const mainApp = document.getElementById('mainApp');
+            mainApp.style.animation = 'fadeIn 0.5s ease-out';
+        }, 500);
+    }
+
+    updatePlayerDisplay() {
+        const avatarEmojis = {
+            'cat': '🐱',
+            'dog': '🐶',
+            'fox': '🦊',
+            'panda': '🐼',
+            'unicorn': '🦄',
+            'robot': '🤖',
+            'lion': '🦁',
+            'monkey': '🐵'
+        };
+
+        document.getElementById('playerAvatarDisplay').textContent = avatarEmojis[this.playerAvatar] || '🐱';
+        document.getElementById('playerNameDisplay').textContent = this.playerName;
+        document.getElementById('playerGradeDisplay').textContent = `${this.playerGrade}. Klasse`;
+    }
+
+    setGradeFromPlayerData() {
+        // Set the grade radio button based on player data
+        const gradeRadio = document.querySelector(`input[name="gradeLevel"][value="${this.playerGrade}"]`);
+        if (gradeRadio) {
+            gradeRadio.checked = true;
+            this.currentGrade = this.playerGrade;
+            this.loadExerciseOptions();
+            this.updateRadioStyles();
+        }
+    }
+
+    savePlayerData(data) {
+        localStorage.setItem('mathAppPlayer', JSON.stringify(data));
+    }
+
+    loadPlayerData() {
+        const data = localStorage.getItem('mathAppPlayer');
+        return data ? JSON.parse(data) : null;
+    }
+
+    // Add method to reset player data (for testing or new player)
+    resetPlayerData() {
+        localStorage.removeItem('mathAppPlayer');
+        location.reload();
     }
 
     bindEvents() {
