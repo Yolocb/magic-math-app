@@ -48,6 +48,43 @@ header p {
     margin-bottom: 20px;
 }
 
+.grade-selection {
+    margin-bottom: 30px;
+}
+
+.grade-selection h3 {
+    font-size: 1.2em;
+    color: #4ecdc4;
+    margin-bottom: 15px;
+}
+
+.grade-label {
+    background: #f8f9fa;
+    color: #333;
+    border: 3px solid transparent;
+}
+
+.grade-label:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+}
+
+.grade-label:has(input[type="radio"]:checked) {
+    background: #ffe6e6;
+    border-color: #ff6b6b;
+}
+
+.grade-label .radio-checkmark {
+    background: #ddd;
+    color: #333;
+    border: none;
+}
+
+.grade-label input[type="radio"]:checked + .radio-checkmark {
+    background: #ff6b6b;
+    color: white;
+}
+
 .number-selection {
     margin-bottom: 30px;
 }
