@@ -1,10 +1,14 @@
-# 🎯 Magische Zahlen - Mathe für Erstklässler
+# 🎯 Magische Zahlen - Mathe für 1.-3. Klasse
 
-Eine kinderfreundliche Web-Applikation für Mathematik-Übungen, speziell entwickelt für Kinder in der 1. Klasse. Jetzt mit interaktiven Antwortfeldern und sofortigem Feedback!
+Eine kinderfreundliche Web-Applikation für Mathematik-Übungen, entwickelt für Kinder der 1., 2. und 3. Klasse. Mit klassenspezifischen Übungen, interaktiven Antwortfeldern und sofortigem Feedback!
 
 ## 📋 Funktionen
 
-Die App bietet 5 verschiedene Arten von Mathe-Übungen:
+Die App bietet verschiedene Arten von Mathe-Übungen, je nach gewählter Klassenstufe:
+
+## 🎓 Klassenstufen-spezifische Übungen
+
+### 1. Klasse
 
 ### 1. 🔢 Halbieren
 - Das Kind muss die angezeigte Zahl halbieren
@@ -31,17 +35,56 @@ Die App bietet 5 verschiedene Arten von Mathe-Übungen:
 - Aufsteigende und absteigende Folgen
 - Beispiel: "Welche Zahl fehlt? 2, 4, ___, 8, 10"
 
+### 2. Klasse
+Zusätzlich zu den Grundübungen der 1. Klasse:
+
+### 6. ✖️ Kleines Einmaleins
+- Multiplikation im Zahlenraum 1-10
+- Beispiel: "3 × 4 = ___"
+
+### 7. ➗ Division mit Rest
+- Einfache Division mit Restberechnung
+- Beispiel: "7 ÷ 2 = ___ Rest ___"
+
+### 8. 🧩 Zahlenrätsel
+- Logisches Denken mit Zahlen
+- Beispiel: "Ich denke an eine Zahl. Sie ist größer als 10 und kleiner als 20, und durch 3 teilbar."
+
+### 3. Klasse
+Erweiterte Übungen für fortgeschrittene Schüler:
+
+### 9. ➕ Addition mit Übertrag
+- Schriftliche Addition zweistelliger Zahlen
+- Beispiel: "47 + 38 = ___"
+
+### 10. ➖ Subtraktion mit Übertrag
+- Schriftliche Subtraktion mit Übertrag
+- Beispiel: "82 - 47 = ___"
+
+### 11. ✖️ Multiplikation zweistellig
+- Multiplikation zweistelliger Zahlen
+- Beispiel: "23 × 4 = ___"
+
+### 12. 📝 Textaufgaben
+- Einfache Sachaufgaben mit Rechenweg
+- Beispiel: "Anna hat 24 Sticker. Sie gibt 8 davon weg. Wie viele hat sie noch?"
+
+### 13. 📏 Längen & Gewichte
+- Umrechnung von Maßeinheiten
+- Beispiel: "Wie viele cm sind 2 m und 30 cm?"
+
 ## 🎮 Wie funktioniert es?
 
-1. **Übungen auswählen**: Wähle eine oder mehrere Übungsarten aus
-2. **Anzahl wählen**: Wähle zwischen 10, 15 oder 20 Aufgaben
-3. **Magische Zahlen**: Klicke auf den "Magische Zahlen" Button
-4. **Interaktiv lösen**: Gib deine Antworten in die Eingabefelder ein
-5. **Sofortiges Feedback**: Erhalte sofort Rückmeldung mit ✅ oder ❌
-6. **Fortschritt verfolgen**: Sieh deine Punktzahl in Echtzeit
-7. **Alle prüfen**: Klicke auf "✅ Alle Antworten prüfen" für eine Gesamtauswertung
-8. **Aufgaben drucken**: Klicke auf "🖨️ Aufgaben drucken" um die Aufgaben zu drucken
-9. **Neue Aufgaben**: Klicke auf "🎲 Neue Aufgaben" um zurück zur Auswahl zu gehen
+1. **Klassenstufe wählen**: Wähle zwischen 1., 2. oder 3. Klasse
+2. **Übungen auswählen**: Wähle eine oder mehrere Übungsarten aus (je nach Klassenstufe)
+3. **Anzahl wählen**: Wähle zwischen 10, 15 oder 20 Aufgaben
+4. **Magische Zahlen**: Klicke auf den "Magische Zahlen" Button
+5. **Interaktiv lösen**: Gib deine Antworten in die Eingabefelder ein
+6. **Sofortiges Feedback**: Erhalte sofort Rückmeldung mit ✅ oder ❌
+7. **Fortschritt verfolgen**: Sieh deine Punktzahl in Echtzeit
+8. **Alle prüfen**: Klicke auf "✅ Alle Antworten prüfen" für eine Gesamtauswertung
+9. **Aufgaben drucken**: Klicke auf "🖨️ Aufgaben drucken" um die Aufgaben zu drucken
+10. **Neue Aufgaben**: Klicke auf "🎲 Neue Aufgaben" um zurück zur Auswahl zu gehen
 
 ## ✨ Neue interaktive Features
 

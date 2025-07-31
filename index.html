@@ -3,18 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magische Zahlen - Mathe für Erstklässler</title>
+    <title>Magische Zahlen - Mathe für 1.-3. Klasse</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
             <h1>🎯 Magische Zahlen 🎯</h1>
-            <p>Wähle deine Lieblings-Mathe-Übungen aus!</p>
+            <p>Mathe-Übungen für die 1., 2. und 3. Klasse!</p>
         </header>
 
         <div class="exercise-selection">
             <h2>Welche Übungen möchtest du machen?</h2>
+            <div class="grade-selection">
+                <h3>Wähle deine Klassenstufe:</h3>
+                <div class="radio-group">
+                    <label class="radio-label grade-label">
+                        <input type="radio" name="gradeLevel" value="1" checked>
+                        <span class="radio-checkmark">1</span>
+                        1. Klasse
+                    </label>
+                    
+                    <label class="radio-label grade-label">
+                        <input type="radio" name="gradeLevel" value="2">
+                        <span class="radio-checkmark">2</span>
+                        2. Klasse
+                    </label>
+                    
+                    <label class="radio-label grade-label">
+                        <input type="radio" name="gradeLevel" value="3">
+                        <span class="radio-checkmark">3</span>
+                        3. Klasse
+                    </label>
+                </div>
+            </div>
             <div class="number-selection">
                 <h3>Wie viele Aufgaben möchtest du?</h3>
                 <div class="radio-group">
@@ -37,36 +59,8 @@
                     </label>
                 </div>
             </div>
-            <div class="checkbox-group">
-                <label class="checkbox-label">
-                    <input type="checkbox" id="halbieren" value="halbieren">
-                    <span class="checkmark">➗</span>
-                    Halbieren
-                </label>
-                
-                <label class="checkbox-label">
-                    <input type="checkbox" id="verdoppeln" value="verdoppeln">
-                    <span class="checkmark">✖️</span>
-                    Verdoppeln
-                </label>
-                
-                <label class="checkbox-label">
-                    <input type="checkbox" id="plusrechnen" value="plusrechnen">
-                    <span class="checkmark">➕</span>
-                    Plusrechnen
-                </label>
-                
-                <label class="checkbox-label">
-                    <input type="checkbox" id="minusrechnen" value="minusrechnen">
-                    <span class="checkmark">➖</span>
-                    Minusrechnen
-                </label>
-                
-                <label class="checkbox-label">
-                    <input type="checkbox" id="zahlenfolge" value="zahlenfolge">
-                    <span class="checkmark">🔢</span>
-                    Zahlenfolgen
-                </label>
+            <div id="exerciseOptions" class="checkbox-group">
+                <!-- Übungsoptionen werden dynamisch basierend auf der Klassenstufe geladen -->
             </div>
             
             <button id="generateBtn" class="magic-button">
